@@ -48,24 +48,45 @@ function main() {
 
         if (n === null) {
             n = parseInt(trimmed, 10);
+            if (n < 1 || n > 2*1e5) {
+                console.error('The number of data entries must satisfy 1 ≤ n ≤ 2*10^5');
+                process.exit(1);
+            }
             return;
         }
 
         // Read the next 'n' lines for data array elements
         if (data.length < n) {
+            // 1≤ data[i][0], data[i][1] ≤10^9
             const parts = trimmed.split(/\s+/).map(x => parseInt(x, 10));
+            if (parts.length !== 2) {
+                console.error('Each data line must contain exactly 2 numbers');
+                process.exit(1);
+            }
+            if (parts[0] < 1 || parts[0] > 1e9 || parts[1] < 1 || parts[1] > 1e9) {
+                console.error('Each data element must satisfy 1 ≤ data[i][0], data[i][1] ≤ 10^9');
+                process.exit(1);
+            }
             data.push(parts);
             return;
         }
 
         if (q === null) {
             q = parseInt(trimmed, 10);
+            if (q < 1 || q > 1e5) {
+                console.error('The number of queries must satisfy 1 ≤ q ≤ 10^5');
+                process.exit(1);
+            }
             return;
         }
 
         // Read the next 'q' lines for individual query records
         if (queries.length < q) {
             queries.push(parseInt(trimmed, 10));
+            if (queries[queries.length - 1] < 1 || queries[queries.length - 1] > 1e9) {
+                console.error('Each query must satisfy 1 ≤ query ≤ 10^9');
+                process.exit(1);
+            }
             
             // Execute as soon as the last required query arrives
             if (queries.length === q) {
